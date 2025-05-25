@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Xác minh sản phẩm Lifamax</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: green;
+    }
+    .verified {
+      color: green;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+    .error {
+      color: red;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 60%;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    iframe {
+      width: 100%;
+      height: 800px;
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>✅ Xác minh sản phẩm Lifamax</h1>
+  <p>Nhập mã sản phẩm để kiểm tra nguồn gốc:</p>
+  <input type="text" id="productId" placeholder="Nhập mã sản phẩm, ví dụ: LIFAMAX-0525" />
+  <br />
+  <button onclick="verify()">Xác minh</button>
+  <div id="result"></div>
+  <iframe id="ipfsFrame" style="display:none;"></iframe>
+
+  <script>
+    const productCIDMap = {
+      "LIFAMAX-0525": "bafkreidf5n7xpev5oeuvh5thtkthnt3qgcehdrmbplsl5pzfw5dvysjmha"
+    };
+
+    function verify() {
+      const id = document.getElementById("productId").value.trim();
+      const resultDiv = document.getElementById("result");
+      const frame = document.getElementById("ipfsFrame");
+      const cid = productCIDMap[id];
+
+      if (cid) {
+        resultDiv.innerHTML = `<div class='verified'>✅ Sản phẩm đã được xác minh trên blockchain.</div>`;
+        frame.src = `https://ipfs.io/ipfs/${cid}`;
+        frame.style.display = "block";
+      } else {
+        resultDiv.innerHTML = `<div class='error'>❌ Không tìm thấy sản phẩm trên blockchain.</div>`;
+        frame.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>
